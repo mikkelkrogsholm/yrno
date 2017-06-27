@@ -1,4 +1,4 @@
-Package: yrno
+Package: norweather
 Type: Package
 Title: Download and Parse XML Files from YR.no
 Version: 0.1.0
