@@ -2,7 +2,7 @@
 #'
 #' It is a non-exported helper function for get_weather().
 #'
-#' @param yr_content
+#' @param yr_content extracted data from yr.no
 #'
 #' @return a data frame
 #'
@@ -60,7 +60,7 @@ extract_content <- function(yr_content){
 #'
 #' It is a non-exported helper function for get_weather().
 #'
-#' @param yr_content
+#' @param yr_content extracted data from yr.no
 #'
 #' @return a string
 #'
@@ -87,7 +87,7 @@ link to the specified URL."
 #'
 #' It is a non-exported helper function for get_weather().
 #'
-#' @param extracted_content
+#' @param extracted_content extracted data from yr.no
 #'
 #' @return a data frame
 #'
