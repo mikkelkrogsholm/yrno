@@ -3,7 +3,7 @@
 #' @param place_url the url pointing to the place. Use search_places() to find
 #'     the right url.
 #'
-#' @param forecast set to either "days" or "hours. Days returns six hour intervals
+#' @param forecast set to either "days" or "hours". Days returns six hour intervals
 #'     for several days. Hours returns hourly forecasts for the next 48 hours.
 #'
 #' @examples
@@ -57,6 +57,9 @@ get_weather <- function(place_url, forecast = "days"){
 
   # Extract
   extracted_content <- extract_content(yr_content)
+
+  # Prettify columns
+  extracted_content <- prettify_data(extracted_content)
 
   # Message
   message(extract_creditation(yr_content))

@@ -10,7 +10,7 @@ get_weather(place_url, forecast = "days")
 \item{place_url}{the url pointing to the place. Use search_places() to find
 the right url.}
 
-\item{forecast}{set to either "days" or "hours. Days returns six hour intervals
+\item{forecast}{set to either "days" or "hours". Days returns six hour intervals
 for several days. Hours returns hourly forecasts for the next 48 hours.}
 }
 \description{

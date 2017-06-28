@@ -81,3 +81,35 @@ link to the specified URL."
 
   return(message_string)
 }
+
+
+#' Makes the data frame pretty
+#'
+#' It is a non-exported helper function for get_weather().
+#'
+#' @param extracted_content
+#'
+#' @return a data frame
+#'
+prettify_data <- function(extracted_content){
+
+  # Makes the numeric columns numeric
+  num_vars <-  c("time_period", "symbol_number", "symbol_numberex",
+                 "precipitation_value", "precipitation_maxvalue",
+                 "precipitation_minvalue", "winddirection_deg",
+                 "windspeed_mps", "temperature_value", "pressure_value")
+
+  num_index <- which(names(extracted_content) %in% num_vars)
+
+  extracted_content[, num_index] <- purrr::map(extracted_content[, num_index], as.numeric)
+
+  # Turns the time columns into POSIXct
+  extracted_content$time_from <- lubridate::ymd_hms(extracted_content$time_from,
+                                               tz = extracted_content$tz[1])
+  extracted_content$time_to <- lubridate::ymd_hms(extracted_content$time_to,
+                                             tz = extracted_content$tz[1])
+
+  # Return the pretty data
+  return(extracted_content)
+
+}
