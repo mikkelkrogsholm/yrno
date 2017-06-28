@@ -61,6 +61,9 @@ search_places <- function(place = "", country = ""){
   place_url <- paste0("https://www.yr.no", place_url)
   places_df$place_url <- place_url
 
+  # Make column names lower case
+  names(places_df) <- tolower(names(places_df))
+
   # Return the possible places
   return(places_df)
 }
