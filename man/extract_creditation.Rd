@@ -7,7 +7,7 @@
 extract_creditation(yr_content)
 }
 \arguments{
-\item{yr_content}{}
+\item{yr_content}{extracted data from yr.no}
 }
 \value{
 a string

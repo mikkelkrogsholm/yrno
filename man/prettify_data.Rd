@@ -7,7 +7,7 @@
 prettify_data(extracted_content)
 }
 \arguments{
-\item{extracted_content}{}
+\item{extracted_content}{extracted data from yr.no}
 }
 \value{
 a data frame

@@ -9,50 +9,57 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
+This vignette show you how to use the `norweather` package. 
 
-- Never uses retina figures
-- Has a smaller default figure size
-- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
+`norweather` is  a wrapper for the weather forecasts from Yr, delivered by the Norwegian Meteorological Institute and the NRK.
 
-## Vignette Info
+Please read more about the conditions and guidelines at http://om.yr.no/verdata/
+English explanation at http://om.yr.no/verdata/free-weather-data/
 
-Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
+There are two steps to follow when you want to get the weather data:
 
-## Styles
+* Find the place to get weather data for
 
-The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
+* Get the weather data
 
-    output: 
-      rmarkdown::html_vignette:
-        css: mystyles.css
+## Find the place
+In order for us to get the data from the Yr service we need to have the appropriate place url. There are several ways of doing this. 
+ 
+**Manual lookup**    
+You  can do a manual lookup on [yr.no](https://www.yr.no/). Here you can search for a location and navigate to the site with the weather forecast for that place. For instance, if you go to the webpage and search for *Copenhagen* and then navigate to the capital of Denmark you should end up on the following url: https://www.yr.no/place/Denmark/Capital/Copenhagen/
 
-## Figures
+There you can se the weather forecast for Copenhagen, Denmark. You can also use the url to get data systematically into R.
 
-The figure sizes have been customised so that you can easily put two images side-by-side. 
 
-```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
+**Automatic lookup**     
+You can also use the `search_places()` function in the `norweather` package. 
+
+```{r}
+cph <- norweather::search_places(place = "Copenhagen")
 ```
 
-You can enable figure captions by `fig_caption: yes` in YAML:
+This function searches for *Copenhagen* and then returns possible matches in a data frame.
 
-    output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
-
-Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
-
-## More Examples
-
-You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
-
-```{r, echo=FALSE, results='asis'}
-knitr::kable(head(mtcars, 10))
+```{r}
+head(cph)
 ```
 
-Also a quote using `>`:
+The first row looks about right, and indeed it is the same url as the one we identified above manually.
 
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))
+Now we can use the url to fetch weather data for automatically into R.
+
+## Get the weather data
+
+```{r}
+place_url <- "https://www.yr.no/place/Denmark/Capital/Copenhagen/"
+```
+
+
+```{r}
+forecast_days <- norweather::get_weather(place_url, forecast = "days")
+```
+
+```{r}
+forecast_hours <- norweather::get_weather(place_url, forecast = "hours")
+```
+

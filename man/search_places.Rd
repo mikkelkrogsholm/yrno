@@ -21,7 +21,6 @@ Search yr.no for a place.
 library(norweather)
 
 search_places(place = "Copenhagen")
-search_places(place = "Copenhagen", country = "US")
 search_places(place = "New York")
 search_places(place = "London")
 }
