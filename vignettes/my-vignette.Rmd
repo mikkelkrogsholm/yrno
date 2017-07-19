@@ -13,13 +13,12 @@ This vignette show you how to use the `norweather` package.
 
 `norweather` is  a wrapper for the weather forecasts from Yr, delivered by the Norwegian Meteorological Institute and the NRK.
 
-Please read more about the conditions and guidelines at http://om.yr.no/verdata/
+Please read more about the conditions and guidelines at http://om.yr.no/verdata/      
 English explanation at http://om.yr.no/verdata/free-weather-data/
 
 There are two steps to follow when you want to get the weather data:
 
 * Find the place to get weather data for
-
 * Get the weather data
 
 ## Find the place
@@ -46,20 +45,41 @@ head(cph)
 
 The first row looks about right, and indeed it is the same url as the one we identified above manually.
 
-Now we can use the url to fetch weather data for automatically into R.
+Now we can use the url to fetch weather data for Copenhagen automatically into R.
 
 ## Get the weather data
+First we set our place url. This is the basis of all the different forecasts we want to get.
 
 ```{r}
 place_url <- "https://www.yr.no/place/Denmark/Capital/Copenhagen/"
 ```
 
+We can then use the `get_weather()` function to get forecasts for Copenhagen.
 
 ```{r}
 forecast_days <- norweather::get_weather(place_url, forecast = "days")
 ```
 
+As you can see there are some conditions to using the data from Yr. Whenever you call to get data, the function will make you aware of how to credit the data correctly.
+
+Above we set the `forecast` parameter to *"days"*. This means that the `get_weather()` function will get a forecast for the next week our so, where every day is split in to 6 hour intervals - so each day has four different intervals.
+
+Lets have a look:
+```{r}
+dplyr::glimpse(forecast_days)
+```
+
+We can also get a more detailed forecast: the hourly forecast. Here we set the `forecast` parameter to *"hours"*. 
+
 ```{r}
 forecast_hours <- norweather::get_weather(place_url, forecast = "hours")
 ```
 
+This forecast has predictions for each hour for the next 48 hours.
+
+Lets have a look:
+```{r}
+dplyr::glimpse(forecast_hours)
+```
+
+And that is how you use the `norweather` package.

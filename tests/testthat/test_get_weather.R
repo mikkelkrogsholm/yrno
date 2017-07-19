@@ -4,10 +4,12 @@ context("Testing the get_weather() function")
 
 # Get weather for days and for hours
 weather_days <- suppressMessages(
-  get_weather("https://www.yr.no/place/Denmark/Capital/Copenhagen/", forecast = "days")
+  get_weather("https://www.yr.no/place/Denmark/Capital/Copenhagen/",
+              forecast = "days")
 )
 weather_hours <- suppressMessages(
-  get_weather("https://www.yr.no/place/Denmark/Capital/Copenhagen/", forecast = "hours")
+  get_weather("https://www.yr.no/place/Denmark/Capital/Copenhagen/",
+              forecast = "hours")
 )
 
 # Run tests

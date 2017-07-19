@@ -1,11 +1,101 @@
-
 ---
 output: github_document
 ---
 
+<!-- README.md is generated from README.Rmd. Please edit that file -->
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
 ```
 
-# Readme coming soon
+# norweather
+
+The goal of `norweather` is to high quality weather data from the Norwegian Meteorological Institute and the NRK easily into R.
+
+## Installation
+
+You can install norweather from github with:
+
+```{r gh-installation, eval = FALSE}
+# install.packages("devtools")
+devtools::install_github("mikkelkrogsholm/yrno")
+```
+
+This Readme shows you how to use the `norweather` package. 
+
+`norweather` is  a wrapper for the weather forecasts from Yr, delivered by the Norwegian Meteorological Institute and the NRK.
+
+Please read more about the conditions and guidelines at http://om.yr.no/verdata/      
+English explanation at http://om.yr.no/verdata/free-weather-data/
+
+There are two steps to follow when you want to get the weather data:
+
+* Find the place to get weather data for
+* Get the weather data
+
+## Find the place
+In order for us to get the data from the Yr service we need to have the appropriate place url. There are several ways of doing this. 
+ 
+**Manual lookup**    
+You  can do a manual lookup on [yr.no](https://www.yr.no/). Here you can search for a location and navigate to the site with the weather forecast for that place. For instance, if you go to the webpage and search for *Copenhagen* and then navigate to the capital of Denmark you should end up on the following url: https://www.yr.no/place/Denmark/Capital/Copenhagen/
+
+There you can se the weather forecast for Copenhagen, Denmark. You can also use the url to get data systematically into R.
+
+
+**Automatic lookup**     
+You can also use the `search_places()` function in the `norweather` package. 
+
+```{r}
+cph <- norweather::search_places(place = "Copenhagen")
+```
+
+This function searches for *Copenhagen* and then returns possible matches in a data frame.
+
+```{r}
+head(cph)
+```
+
+The first row looks about right, and indeed it is the same url as the one we identified above manually.
+
+Now we can use the url to fetch weather data for Copenhagen automatically into R.
+
+## Get the weather data
+First we set our place url. This is the basis of all the different forecasts we want to get.
+
+```{r}
+place_url <- "https://www.yr.no/place/Denmark/Capital/Copenhagen/"
+```
+
+We can then use the `get_weather()` function to get forecasts for Copenhagen.
+
+```{r}
+forecast_days <- norweather::get_weather(place_url, forecast = "days")
+```
+
+As you can see there are some conditions to using the data from Yr. Whenever you call to get data, the function will make you aware of how to credit the data correctly.
+
+Above we set the `forecast` parameter to *"days"*. This means that the `get_weather()` function will get a forecast for the next week our so, where every day is split in to 6 hour intervals - so each day has four different intervals.
+
+Lets have a look:
+```{r}
+dplyr::glimpse(forecast_days)
+```
+
+We can also get a more detailed forecast: the hourly forecast. Here we set the `forecast` parameter to *"hours"*. 
+
+```{r}
+forecast_hours <- norweather::get_weather(place_url, forecast = "hours")
+```
+
+This forecast has predictions for each hour for the next 48 hours.
+
+Lets have a look:
+```{r}
+dplyr::glimpse(forecast_hours)
+```
+
+And that is how you use the `norweather` package.
